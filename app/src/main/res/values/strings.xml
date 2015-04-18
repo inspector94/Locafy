@@ -10,4 +10,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_selfie">SelfieActivity</string>
+
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="splash_screen">Locafy</string>
 </resources>
