@@ -1,156 +1,52 @@
 package com.locafy.app;
 
-import android.app.AlertDialog;
-import android.app.Service;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.provider.Settings;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
 
-public class activePlaylist extends Service implements LocationListener{
 
-    private final Context context;
+public class activePlaylist extends ActionBarActivity {
 
-    boolean isGPSEnabled = false;
-    boolean isNetworkEnabled = false;
-    boolean canGetLocation = false;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_active_playlist);
+        Intent intent = getIntent();
+        String username = intent.getStringExtra(MainActivity.USER_NAME);
+        String password = intent.getStringExtra(MainActivity.PASSWORD);
 
-    Location location;
+        // Create the text view
+        TextView textView = new TextView(this);
+        textView.setTextSize(40);
+        textView.setText(username);
 
-    double latitude;
-    double longitude;
-
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
-
-    protected LocationManager locationManager;
-
-    public activePlaylist(Context context){
-        this.context = context;
-        getLocation();
+        // Set the text view as the activity layout
+        setContentView(textView);
     }
 
-    public Location getLocation(){
-        try{
-            locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-            isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-            isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-            if(!isGPSEnabled && !isNetworkEnabled){
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_active_playlist, menu);
+        return true;
+    }
 
-            } else {
-                this.canGetLocation = true;
-                if(isNetworkEnabled) {
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-                    if (locationManager != null) {
-                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if (location != null) {
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
-                        }
-                    }
-                }
-                if(isGPSEnabled){
-                    if (location == null){
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES,MIN_DISTANCE_CHANGE_FOR_UPDATES,this);
-                        if(locationManager != null){
-                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                            if(location != null){
-                                latitude = location.getLatitude();
-                                longitude = location.getLongitude();
-                            }
-                        }
-                    }
-                }
-            }
-        }catch(Exception e)    {
-            e.printStackTrace();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
         }
-        return location;
+
+        return super.onOptionsItemSelected(item);
     }
-
-    public void stopUsingGPS(){
-        if(locationManager != null){
-            locationManager.removeUpdates(activePlaylist.this);
-        }
-    }
-
-    public double getLatitude(){
-        if(location != null){
-            latitude = location.getLatitude();
-        }
-        return latitude;
-    }
-
-    public double getLongitude(){
-        if(location != null){
-            longitude = location.getLongitude();
-        }
-        return longitude;
-    }
-
-    public boolean canGetLocation(){
-        return this.canGetLocation;
-    }
-
-    public void showSettingsAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-
-        alertDialog.setTitle("GPS is settings");
-
-        alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
-
-        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                context.startActivity(intent);
-            }
-        });
-
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-
-        alertDialog.show();
-    }
-
-
-    @Override
-    public void onLocationChanged(Location arg0) {
-
-    }
-
-    @Override
-    public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String arg0) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String arg0) {
-
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
-
-
 }
