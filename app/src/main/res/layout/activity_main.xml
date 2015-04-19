@@ -13,8 +13,8 @@
         android:id="@+id/imageView"
         android:layout_gravity="center_horizontal"
         android:src="@mipmap/locafylogo"/>
-
-    <EditText android:id="@+id/edit_message"
+    
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="@string/username_text"
