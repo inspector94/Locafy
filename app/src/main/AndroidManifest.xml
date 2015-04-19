@@ -36,8 +36,8 @@
             android:label="@string/title_activity_active_playlist" >
         </activity>
         <activity
-            android:name=".Second"
-            android:label="@string/title_activity_second" >
+            android:name=".addPlaylist"
+            android:label="@string/title_activity_add_playlist" >
         </activity>
     </application>
 

@@ -1,6 +1,7 @@
 package com.locafy.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -17,6 +18,13 @@ import java.util.List;
 
 public class activePlaylist extends ActionBarActivity {
 
+    // Save GPS and add Playlist
+    public void start_add_Playlist(View view) {
+        Intent intent = new Intent(this, addPlaylist.class);
+        startActivity(intent);
+    }
+
+    // create listView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

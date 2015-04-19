@@ -4,18 +4,33 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.locafy.app.activePlaylist">
+    android:background="#ffffff"
+    tools:context="com.locafy.app.activePlaylist"
+    android:touchscreenBlocksFocus="true">
 
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="400dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true">
+        android:id="@+id/linearLayout">
 
         <ListView android:id="@+id/listview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="404dp"
+            android:background="#ffffffff" />
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_playlist"
+        android:id="@+id/button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/linearLayout"
+        android:background="#FFFFFFFF"
+        android:onClick="start_add_Playlist"
+        android:fontFamily="Helvetica Neue"
+        android:textColor="#83b300" />
 </RelativeLayout>

@@ -12,6 +12,11 @@
     <string name="splash_screen">Locafy</string>
     <string name="title_activity_active_playlist">activePlaylist</string>
 
+
+    <string name="add_playlist">+ Playlist</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_second">Second</string>
+    <string name="title_activity_add_playlist">addPlaylist</string>
+    <string name="playlist">Add Playlist</string>
+    <string name="addPlaylist">Add</string>
 </resources>
