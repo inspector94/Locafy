@@ -8,9 +8,9 @@
     <string name="title_activity_display_message">My Message</string>
     <string name="action_search">Action Search</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="title_activity_selfie">SelfieActivity</string>
-
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="splash_screen">Locafy</string>
+    <string name="title_activity_active_playlist">activePlaylist</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
