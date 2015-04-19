@@ -15,12 +15,13 @@ public class activePlaylist extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_playlist);
         Intent intent = getIntent();
-        String message = intent.getStringExtra(MainActivity.USER_NAME);
+        String username = intent.getStringExtra(MainActivity.USER_NAME);
+        String password = intent.getStringExtra(MainActivity.PASSWORD);
 
         // Create the text view
         TextView textView = new TextView(this);
         textView.setTextSize(40);
-        textView.setText(message);
+        textView.setText(username);
 
         // Set the text view as the activity layout
         setContentView(textView);

@@ -22,6 +22,7 @@ import android.widget.EditText;
         EditText password = (EditText) findViewById(R.id.password);
         String message2 = username.getText().toString();
         intent.putExtra(PASSWORD, message2);
+
         startActivity(intent);
     }
 
