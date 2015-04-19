@@ -15,13 +15,13 @@ import android.widget.EditText;
 
 
     public void startActivePlaylist(View view) {
-        Intent intent = new Intent(this, activePlaylist.class);
-        EditText username = (EditText) findViewById(R.id.username);
-        String message1 = username.getText().toString();
-        intent.putExtra(USER_NAME, message1);
-        EditText password = (EditText) findViewById(R.id.password);
-        String message2 = username.getText().toString();
-        intent.putExtra(PASSWORD, message2);
+        Intent intent = new Intent(this, Second.class);
+        //EditText username = (EditText) findViewById(R.id.username);
+        //String message1 = username.getText().toString();
+        //intent.putExtra(USER_NAME, message1);
+        //EditText password = (EditText) findViewById(R.id.password);
+        //String message2 = username.getText().toString();
+        //intent.putExtra(PASSWORD, message2);
         startActivity(intent);
     }
 
