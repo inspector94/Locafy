@@ -1,156 +1,106 @@
 package com.locafy.app;
 
-import android.app.AlertDialog;
-import android.app.Service;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.provider.Settings;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-public class activePlaylist extends Service implements LocationListener{
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
-    private final Context context;
 
-    boolean isGPSEnabled = false;
-    boolean isNetworkEnabled = false;
-    boolean canGetLocation = false;
+public class activePlaylist extends ActionBarActivity {
 
-    Location location;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_active_playlist);
 
-    double latitude;
-    double longitude;
+        final ListView listview = (ListView) findViewById(R.id.listview);
+        String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
+                "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
+                "Linux", "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux",
+                "OS/2", "Ubuntu", "Windows7", "Max OS X", "Linux", "OS/2",
+                "Android", "iPhone", "WindowsMobile" };
 
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
-    private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
+        final ArrayList<String> list = new ArrayList<String>();
+        for (int i = 0; i < values.length; ++i) {
+            list.add(values[i]);
+        }
+        final StableArrayAdapter adapter = new StableArrayAdapter(this,
+                android.R.layout.simple_list_item_1, list);
+        listview.setAdapter(adapter);
 
-    protected LocationManager locationManager;
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-    public activePlaylist(Context context){
-        this.context = context;
-        getLocation();
-    }
-
-    public Location getLocation(){
-        try{
-            locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
-            isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-            isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-            if(!isGPSEnabled && !isNetworkEnabled){
-
-            } else {
-                this.canGetLocation = true;
-                if(isNetworkEnabled) {
-                    locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-
-                    if (locationManager != null) {
-                        location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if (location != null) {
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
-                        }
-                    }
-                }
-                if(isGPSEnabled){
-                    if (location == null){
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES,MIN_DISTANCE_CHANGE_FOR_UPDATES,this);
-                        if(locationManager != null){
-                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                            if(location != null){
-                                latitude = location.getLatitude();
-                                longitude = location.getLongitude();
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
+                final String item = (String) parent.getItemAtPosition(position);
+                view.animate().setDuration(2000).alpha(0)
+                        .withEndAction(new Runnable() {
+                            @Override
+                            public void run() {
+                                list.remove(item);
+                                adapter.notifyDataSetChanged();
+                                view.setAlpha(1);
                             }
-                        }
-                    }
-                }
+                        });
             }
-        }catch(Exception e)    {
-            e.printStackTrace();
-        }
-        return location;
-    }
 
-    public void stopUsingGPS(){
-        if(locationManager != null){
-            locationManager.removeUpdates(activePlaylist.this);
-        }
-    }
-
-    public double getLatitude(){
-        if(location != null){
-            latitude = location.getLatitude();
-        }
-        return latitude;
-    }
-
-    public double getLongitude(){
-        if(location != null){
-            longitude = location.getLongitude();
-        }
-        return longitude;
-    }
-
-    public boolean canGetLocation(){
-        return this.canGetLocation;
-    }
-
-    public void showSettingsAlert() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-
-        alertDialog.setTitle("GPS is settings");
-
-        alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
-
-        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                context.startActivity(intent);
-            }
         });
+    }
 
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_active_playlist, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+    private class StableArrayAdapter extends ArrayAdapter<String> {
+
+        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+
+        public StableArrayAdapter(Context context, int textViewResourceId,
+                                  List<String> objects) {
+            super(context, textViewResourceId, objects);
+            for (int i = 0; i < objects.size(); ++i) {
+                mIdMap.put(objects.get(i), i);
             }
-        });
+        }
 
-        alertDialog.show();
-    }
+        @Override
+        public long getItemId(int position) {
+            String item = getItem(position);
+            return mIdMap.get(item);
+        }
 
-
-    @Override
-    public void onLocationChanged(Location arg0) {
-
-    }
-
-    @Override
-    public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String arg0) {
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
 
     }
-
-    @Override
-    public void onProviderDisabled(String arg0) {
-
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
-
-
 }
