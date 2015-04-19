@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.locafy.app" >
 
-    <uses-permission android:name = "android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -29,6 +29,10 @@
         </activity>
         <activity
             android:name=".activePlaylist"
+            android:label="@string/title_activity_active_playlist" >
+        </activity>
+        <activity
+            android:name=".util.activePlaylist"
             android:label="@string/title_activity_active_playlist" >
         </activity>
     </application>

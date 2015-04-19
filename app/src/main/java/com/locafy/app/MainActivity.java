@@ -1,13 +1,25 @@
 package com.locafy.app;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.Intent;
 import android.view.View;
+import android.widget.EditText;
 
 
-public class MainActivity extends ActionBarActivity {
+    public class MainActivity extends ActionBarActivity {
+        public final static String USER_NAME = "com.locafy.app.USER_NAME";
+
+
+    public void sendMessage(View view) {
+        Intent intent = new Intent(this, activePlaylist.class);
+        EditText username = (EditText) findViewById(R.id.username);
+        String message = username.getText().toString();
+        intent.putExtra(USER_NAME, message);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
