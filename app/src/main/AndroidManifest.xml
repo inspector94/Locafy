@@ -31,10 +31,6 @@
             android:name=".activePlaylist"
             android:label="@string/title_activity_active_playlist" >
         </activity>
-        <activity
-            android:name=".util.activePlaylist"
-            android:label="@string/title_activity_active_playlist" >
-        </activity>
     </application>
 
 </manifest>

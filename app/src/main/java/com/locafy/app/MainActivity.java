@@ -11,6 +11,7 @@ import android.widget.EditText;
 
     public class MainActivity extends ActionBarActivity {
         public final static String USER_NAME = "com.locafy.app.USER_NAME";
+        public final static String PASSWORD = "com.locafy.app.PASSWORD";
 
 
     public void startActivePlaylist(View view) {
@@ -20,7 +21,7 @@ import android.widget.EditText;
         intent.putExtra(USER_NAME, message1);
         EditText password = (EditText) findViewById(R.id.password);
         String message2 = username.getText().toString();
-        intent.putExtra(USER_NAME, message2);
+        intent.putExtra(PASSWORD, message2);
         startActivity(intent);
     }
 
